@@ -6,7 +6,8 @@ const mpsDisplay = document.getElementById('cps');
 const mine = document.getElementById('mine');
 const storeContainer = document.getElementById('store-container');
 
-const facilities = [
+// Initial facilities data for reset purposes
+const initialFacilities = [
     {
         name: '常総学院',
         cost: 15,
@@ -14,7 +15,7 @@ const facilities = [
         count: 0
     },
     {
-        name: '一心の母親',
+        name: 'おばあちゃん',
         cost: 100,
         mps: 1,
         count: 0
@@ -49,9 +50,11 @@ const facilities = [
         mps: 1917,
         count: 0
     }
-    
 ];
 
+let facilities = JSON.parse(JSON.stringify(initialFacilities)); // Deep copy for mutable array
+
+// --- Game Logic Functions ---
 function updateMinerals() {
     mineralsDisplay.innerText = Math.floor(minerals);
 }
@@ -89,13 +92,66 @@ function buyFacility(index) {
         updateMinerals();
         updateMPS();
         renderStore();
+        saveGame(); // Save game after every purchase
     }
 }
 
-// Initial render
-renderStore();
-updateMinerals(); // Display initial 0 minerals
-updateMPS();     // Display initial 0 mps
+// --- Save/Load/Reset Functions ---
+const SAVE_KEY = 'isshinClickerSave';
+
+function saveGame() {
+    const gameSave = {
+        minerals: minerals,
+        mps: mps,
+        facilities: facilities
+    };
+    localStorage.setItem(SAVE_KEY, JSON.stringify(gameSave));
+    console.log('Game Saved!');
+}
+
+function loadGame() {
+    const savedData = localStorage.getItem(SAVE_KEY);
+    if (savedData) {
+        const gameSave = JSON.parse(savedData);
+        minerals = gameSave.minerals;
+        mps = gameSave.mps;
+        // Ensure facilities structure is consistent, add new ones if any
+        gameSave.facilities.forEach(savedFacility => {
+            const index = initialFacilities.findIndex(f => f.name === savedFacility.name);
+            if (index !== -1) {
+                facilities[index] = savedFacility;
+            } else {
+                // Handle new facilities added since last save if necessary
+                // For simplicity, we'll just use the initial one if not found in saved
+                facilities.push(savedFacility); // Or handle merging differently
+            }
+        });
+        console.log('Game Loaded!');
+    } else {
+        console.log('No saved game found, starting new game.');
+        facilities = JSON.parse(JSON.stringify(initialFacilities)); // Start with initial facilities
+    }
+    updateMinerals();
+    updateMPS();
+    renderStore();
+}
+
+function resetGame() {
+    if (confirm('Are you sure you want to reset your game? All progress will be lost!')) {
+        localStorage.removeItem(SAVE_KEY);
+        minerals = 0;
+        mps = 0;
+        facilities = JSON.parse(JSON.stringify(initialFacilities)); // Reset to initial facilities
+        updateMinerals();
+        updateMPS();
+        renderStore();
+        console.log('Game Reset!');
+    }
+}
+
+// --- Event Listeners and Initial Setup ---
+// Initial render (will be updated by loadGame)
+// renderStore(); // Moved to loadGame
 
 mine.addEventListener('click', (e) => {
     minerals++;
@@ -132,4 +188,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const lineUrl = `https://social-plugins.line.me/lineit/share?url=${url}`;
         lineShareButton.setAttribute('href', lineUrl);
     }
+
+    // Add event listeners for save and reset buttons
+    const saveButton = document.getElementById('save-game-button');
+    const resetButton = document.getElementById('reset-game-button');
+
+    if (saveButton) {
+        saveButton.addEventListener('click', saveGame);
+    }
+    if (resetButton) {
+        resetButton.addEventListener('click', resetGame);
+    }
+
+    loadGame(); // Load game state on page load
 });
