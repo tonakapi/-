@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #36454F; /* Darker, earthy tone for mine */
+    color: #E0E0E0; /* Lighter color for text */
+}
+
+#game-container {
+    display: flex;
+    width: 900px;
+    height: 600px;
+    background-color: #2F4F4F; /* Darker tone */
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#mine-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #555; /* Darker border */
+    padding: 20px;
+    position: relative; /* For positioning the +1 text */
+}
+
+#score-container {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+#score-container p:first-child {
+    font-family: 'Pacifico', cursive; /* Keeping the fancy font for score */
+    font-size: 2em;
+    margin: 0;
+}
+
+#mine {
+    width: 200px;
+    height: 200px;
+    background-image: url('いっしん.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%; /* Make it round initially, can be modified for more rock-like shape */
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 0 10px rgba(0,0,0,0.3);
+    border: 5px solid #555;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    color: #eee;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+#mine::before {
+    content: ''; /* Pickaxe emoji for visual cue */
+    position: absolute;
+    font-size: 0.8em;
+}
+
+#mine:active {
+    transform: scale(0.95);
+}
+
+.plus-one {
+    position: absolute;
+    font-size: 1.5em;
+    color: #FFD700; /* Gold-like color for minerals */
+    animation: fade-up 1s forwards;
+    pointer-events: none; /* So it doesn't interfere with mine clicks */
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}
+
+#store-section {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+}
+
+h2 {
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.upgrade {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.upgrade:hover {
+    background-color: #eff;
+    transform: translateY(-2px);
+}
+
+.upgrade.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+    background-color: #f0f0f0;
+}
+
+.upgrade p {
+    margin: 5px 0;
+    color: #333;
+}
+
+.share-button {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    background-color: #00B900;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.share-button:hover {
+    background-color: #009a00;
+}
