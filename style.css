@@ -148,3 +148,20 @@ h2 {
 .share-button:hover {
     background-color: #009a00;
 }
+
+.game-button {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 5px; /* Adjust margin for spacing between buttons */
+    background-color: #007bff; /* Blue color for action buttons */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.game-button:hover {
+    background-color: #0056b3;
+}
