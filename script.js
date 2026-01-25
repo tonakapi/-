@@ -183,38 +183,49 @@ function resetGame() {
         updateMinerals();
         updateMPS();
         renderStore();
-            console.log('Game Reset!');
-        }
+        console.log('Game Reset!');
     }
-    }
+}
         
         function reincarnateGame() {
-            if (confirm('【注意事項】転生すると現在のIssinと施設が全てリセットされます。累計1,000,000 Issin以上で転生ポイントを獲得できます。本当に転生しますか？')) {
-                const pointsGained = Math.floor(Math.sqrt(totalIssinsEverProduced / 1_000_000));
-        
-                if (pointsGained === 0) {
-                    alert('転生ポイントを獲得するには、累計1,000,000 Issin以上が必要です。');
-                    return;
-                }
-        
-                reincarnationPoints += pointsGained;
-                permanentBonusMultiplier = 1 + (reincarnationPoints * 0.2); // 20% per point
-        
-                // Reset game state
-                minerals = 0;
-                mps = 0;
-                facilities = JSON.parse(JSON.stringify(initialFacilities)); // Reset to initial facilities
-        
-                // Update UI
-                updateMinerals();
-                updateMPS();
-                renderStore();
-                updateIssinTotals(); // Update new reincarnation info
-                saveGame(); // Save game after reincarnation
-        
-                                        alert(`${pointsGained} 転生ポイントを獲得しました！合計 ${reincarnationPoints} ポイントになりました。`);
-                                    }
-                                }
+    if (confirm('【注意事項】転生すると現在のIssinと施設が全てリセットされます。累計1,000,000 Issin以上で転生ポイントを獲得できます。本当に転生しますか？')) {
+        const pointsGained = Math.floor(Math.sqrt(totalIssinsEverProduced / 1_000_000));
+
+        if (pointsGained === 0) {
+            alert('転生ポイントを獲得するには、累計1,000,000 Issin以上が必要です。');
+            return;
+        }
+
+        reincarnationPoints += pointsGained;
+        permanentBonusMultiplier = 1 + (reincarnationPoints * 0.2); // 20% per point
+
+        // Reset game state
+        minerals = 0;
+        mps = 0;
+        facilities = JSON.parse(JSON.stringify(initialFacilities)); // Reset to initial facilities
+
+        // Update UI
+        updateMinerals();
+        updateMPS();
+        renderStore();
+        updateIssinTotals(); // Update new reincarnation info
+        saveGame(); // Save game after reincarnation
+
+        alert(`${pointsGained} 転生ポイントを獲得しました！合計 ${reincarnationPoints} ポイントになりました。`);
+    }
+}
+
+function updateIssinTotals() {
+    const reincarnationInfo = document.getElementById('reincarnation-info');
+    if (reincarnationInfo) {
+        reincarnationInfo.innerHTML = `
+            <p>累計Issin: ${Math.floor(totalIssinsEverProduced)}</p>
+            <p>転生ポイント: ${reincarnationPoints}</p>
+            <p>永続ボーナス: x${permanentBonusMultiplier.toFixed(2)}</p>
+        `;
+    }
+}
+
 // --- Event Listeners and Initial Setup ---
 // Initial render (will be updated by loadGame)
 // renderStore(); // Moved to loadGame
