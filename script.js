@@ -3,6 +3,7 @@ let mps = 0; // minerals per second
 
 // New variables for Reincarnation
 let reincarnationPoints = 0;
+let potentialReincarnationPoints = 0;
 let permanentBonusMultiplier = 1; // 1 + (reincarnationPoints * 0.2)
 
 const mineralsDisplay = document.getElementById('score');
@@ -168,7 +169,6 @@ function loadGame() {
     updateMinerals();
     updateMPS();
     renderStore();
-    updateIssinTotals(); // Update new reincarnation info after loading
 }
 
 function resetGame() {
@@ -216,6 +216,7 @@ function updateIssinTotals() {
     const reincarnationInfo = document.getElementById('reincarnation-info');
     if (reincarnationInfo) {
         reincarnationInfo.innerHTML = `
+            <p>獲得予定ポイント: ${potentialReincarnationPoints}</p>
             <p>転生ポイント: ${reincarnationPoints}</p>
             <p>永続ボーナス: x${permanentBonusMultiplier.toFixed(2)}</p>
         `;
@@ -252,7 +253,9 @@ mine.addEventListener('click', (e) => {
 setInterval(() => {
     const passiveGain = mps / 10; // Declare passiveGain
     minerals += passiveGain * permanentBonusMultiplier; // Apply bonus multiplier
+    potentialReincarnationPoints = Math.floor(Math.sqrt(minerals / 1_000_000));
     updateMinerals();
+    updateIssinTotals();
     renderStore(); // Re-render store to update disabled state and costs
 }, 100);
 
