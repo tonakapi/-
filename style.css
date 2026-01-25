@@ -179,7 +179,7 @@ h2 {
 }
 
 #reincarnation-info p {
-    color: #FFFF00; /* Bright yellow for better visibility */
+    color: #000000; /* Black for better visibility against certain backgrounds */
     font-weight: bold;
 }
 
