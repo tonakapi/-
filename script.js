@@ -72,6 +72,12 @@ const initialFacilities = [
         cost: 5100000000,
         mps: 200000,
         count: 0
+    },
+    {
+        name: 'ホワイトホール',
+        cost: 750000000000,
+        mps: 3333333,
+        count: 0
     }
 ];
 
