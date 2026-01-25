@@ -55,6 +55,18 @@ const initialFacilities = [
         cost: 20000000,
         mps: 12345,
         count: 0
+    },
+    {
+        name: '一心プラズマ融合炉',
+        cost: 330000000,
+        mps: 50000,
+        count: 0
+    }
+    {
+        name: '時空間一心転移装置',
+        cost: 5100000000,
+        mps: 200000,
+        count: 0
     }
 ];
 
