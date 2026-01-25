@@ -49,6 +49,12 @@ const initialFacilities = [
         cost: 1000000,
         mps: 1917,
         count: 0
+    },
+    {
+        name: '一心補完計画',
+        cost: 20000000,
+        mps: 12345,
+        count: 0
     }
 ];
 
@@ -154,7 +160,7 @@ function resetGame() {
 // renderStore(); // Moved to loadGame
 
 mine.addEventListener('click', (e) => {
-    minerals++;
+    minerals += Math.max(1, mps * 0.2); // Click now gives 20% of current MPS, minimum 1
     updateMinerals();
 
     const plusOne = document.createElement('div');
