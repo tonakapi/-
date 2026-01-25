@@ -239,7 +239,7 @@ mine.addEventListener('click', (e) => {
     updateMinerals();
 
     const plusOne = document.createElement('div');
-    plusOne.innerHTML = `+${Math.floor(amountGained)} Issin`;
+    plusOne.innerHTML = `+${Math.floor(amountGained * permanentBonusMultiplier)} Issin`;
     plusOne.classList.add('plus-one');
     
     // Position the '+1' text at the cursor's location
