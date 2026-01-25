@@ -124,9 +124,6 @@ function saveGame() {
         facilities: facilities,
         totalIssinsEverProduced: totalIssinsEverProduced,
         reincarnationPoints: reincarnationPoints,
-        permanentBonusMultiplier: permanentBonusMultiplier,
-        totalIssinsEverProduced: totalIssinsEverProduced,
-        reincarnationPoints: reincarnationPoints,
         permanentBonusMultiplier: permanentBonusMultiplier
     };
     localStorage.setItem(SAVE_KEY, JSON.stringify(gameSave));
@@ -213,7 +210,9 @@ mine.addEventListener('click', (e) => {
 });
 
 setInterval(() => {
+    const passiveGain = mps / 10; // Declare passiveGain
     minerals += passiveGain * permanentBonusMultiplier; // Apply bonus multiplier
+    totalIssinsEverProduced += passiveGain; // Update total Issins ever produced
     updateMinerals();
     renderStore(); // Re-render store to update disabled state and costs
 }, 100);
