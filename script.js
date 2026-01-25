@@ -1,6 +1,11 @@
 let minerals = 0;
 let mps = 0; // minerals per second
 
+// New variables for Reincarnation
+let totalIssinsEverProduced = 0;
+let reincarnationPoints = 0;
+let permanentBonusMultiplier = 1; // 1 + (reincarnationPoints * 0.2)
+
 const mineralsDisplay = document.getElementById('score');
 const mpsDisplay = document.getElementById('cps');
 const mine = document.getElementById('mine');
