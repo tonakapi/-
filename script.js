@@ -2,7 +2,6 @@ let minerals = 0;
 let mps = 0; // minerals per second
 
 // New variables for Reincarnation
-let totalIssinsEverProduced = 0;
 let reincarnationPoints = 0;
 let permanentBonusMultiplier = 1; // 1 + (reincarnationPoints * 0.2)
 
@@ -127,7 +126,6 @@ function saveGame() {
         minerals: minerals,
         mps: mps,
         facilities: facilities,
-        totalIssinsEverProduced: totalIssinsEverProduced,
         reincarnationPoints: reincarnationPoints,
         permanentBonusMultiplier: permanentBonusMultiplier
     };
@@ -141,7 +139,6 @@ function loadGame() {
         const gameSave = JSON.parse(savedData);
         minerals = gameSave.minerals;
         mps = gameSave.mps !== undefined ? gameSave.mps : 0;
-        totalIssinsEverProduced = gameSave.totalIssinsEverProduced !== undefined ? gameSave.totalIssinsEverProduced : 0;
         reincarnationPoints = gameSave.reincarnationPoints !== undefined ? gameSave.reincarnationPoints : 0;
         permanentBonusMultiplier = gameSave.permanentBonusMultiplier !== undefined ? gameSave.permanentBonusMultiplier : 1;
         // Ensure facilities structure is consistent, add new ones if any
@@ -188,11 +185,11 @@ function resetGame() {
 }
         
         function reincarnateGame() {
-    if (confirm('【注意事項】転生すると現在のIssinと施設が全てリセットされます。累計1,000,000 Issin以上で転生ポイントを獲得できます。本当に転生しますか？')) {
-        const pointsGained = Math.floor(Math.sqrt(totalIssinsEverProduced / 1_000_000));
+    if (confirm('【注意事項】転生すると現在のIssinと施設が全てリセットされます。現在のIssinが1,000,000以上で転生ポイントを獲得できます。本当に転生しますか？')) {
+        const pointsGained = Math.floor(Math.sqrt(minerals / 1_000_000));
 
         if (pointsGained === 0) {
-            alert('転生ポイントを獲得するには、累計1,000,000 Issin以上が必要です。');
+            alert('転生ポイントを獲得するには、現在のIssinが1,000,000以上必要です。');
             return;
         }
 
@@ -255,7 +252,6 @@ mine.addEventListener('click', (e) => {
 setInterval(() => {
     const passiveGain = mps / 10; // Declare passiveGain
     minerals += passiveGain * permanentBonusMultiplier; // Apply bonus multiplier
-    totalIssinsEverProduced += passiveGain; // Update total Issins ever produced
     updateMinerals();
     renderStore(); // Re-render store to update disabled state and costs
 }, 100);
