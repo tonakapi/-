@@ -57,13 +57,13 @@ const initialFacilities = [
         count: 0
     },
     {
-        name: '一心プラズマ融合炉',
+        name: 'プラズマ融合炉',
         cost: 330000000,
         mps: 50000,
         count: 0
-    }
+    },
     {
-        name: '時空間一心転移装置',
+        name: '時空間転移装置',
         cost: 5100000000,
         mps: 200000,
         count: 0
@@ -216,15 +216,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Add event listeners for save and reset buttons
-    const saveButton = document.getElementById('save-game-button');
-    const resetButton = document.getElementById('reset-game-button');
-
-    if (saveButton) {
-        saveButton.addEventListener('click', saveGame);
-    }
-    if (resetButton) {
-        resetButton.addEventListener('click', resetGame);
-    }
-
-    loadGame(); // Load game state on page load
-});
+    const saveButton = document.getElementById('save-game-b
