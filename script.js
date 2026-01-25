@@ -216,4 +216,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Add event listeners for save and reset buttons
-    const saveButton = document.getElementById('save-game-b
+    const saveButton = document.getElementById('save-game-button');utton');
+    const resetButton = document.getElementById('reset-game-button');
+
+    if (saveButton) {
+        saveButton.addEventListener('click', saveGame);
+    }
+    if (resetButton) {
+        resetButton.addEventListener('click', resetGame);
+    }
+
+    loadGame(); // Load game state on page load
+});
