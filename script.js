@@ -137,6 +137,14 @@ function loadGame() {
         console.log('No saved game found, starting new game.');
         facilities = JSON.parse(JSON.stringify(initialFacilities)); // Start with initial facilities
     }
+
+    // Recalculate MPS based on loaded facilities
+    let totalMps = 0;
+    facilities.forEach(facility => {
+        totalMps += facility.mps * facility.count;
+    });
+    mps = totalMps; // Assign calculated totalMps to mps
+
     updateMinerals();
     updateMPS();
     renderStore();
