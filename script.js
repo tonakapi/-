@@ -120,7 +120,7 @@ function loadGame() {
     if (savedData) {
         const gameSave = JSON.parse(savedData);
         minerals = gameSave.minerals;
-        mps = gameSave.mps;
+        mps = gameSave.mps !== undefined ? gameSave.mps : 0;
         // Ensure facilities structure is consistent, add new ones if any
         gameSave.facilities.forEach(savedFacility => {
             const index = initialFacilities.findIndex(f => f.name === savedFacility.name);
@@ -160,7 +160,7 @@ function resetGame() {
 // renderStore(); // Moved to loadGame
 
 mine.addEventListener('click', (e) => {
-    minerals += Math.max(1, mps * 0.2); // Click now gives 20% of current MPS, minimum 1
+    minerals++;
     updateMinerals();
 
     const plusOne = document.createElement('div');
