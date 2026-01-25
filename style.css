@@ -178,3 +178,8 @@ h2 {
     z-index: 1000;
 }
 
+#reincarnation-info p {
+    color: #FFFF00; /* Bright yellow for better visibility */
+    font-weight: bold;
+}
+
