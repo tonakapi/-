@@ -89,7 +89,7 @@ function updateMinerals() {
 }
 
 function updateMPS() {
-    mpsDisplay.innerText = mps.toFixed(1);
+    mpsDisplay.innerText = (mps * permanentBonusMultiplier).toFixed(1);
 }
 
 function renderStore() {
