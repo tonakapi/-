@@ -175,7 +175,7 @@ function loadGame() {
 }
 
 function resetGame() {
-    if (confirm('【注意事項】転生すると現在のIssinと施設が全てリセットされます。累計1,000,000 Issin以上で転生ポイントを獲得できます。本当に転生しますか？')) {
+    if (confirm('Are you sure you want to reset your game? All progress will be lost!')) {
         localStorage.removeItem(SAVE_KEY);
         minerals = 0;
         mps = 0;
