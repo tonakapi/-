@@ -185,6 +185,7 @@ function resetGame() {
         renderStore();
             console.log('Game Reset!');
         }
+    }
         
         function reincarnateGame() {
             if (confirm('【注意事項】転生すると現在のIssinと施設が全てリセットされます。累計1,000,000 Issin以上で転生ポイントを獲得できます。本当に転生しますか？')) {
