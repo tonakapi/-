@@ -168,7 +168,7 @@ function resetGame() {
 // renderStore(); // Moved to loadGame
 
 mine.addEventListener('click', (e) => {
-    minerals++;
+    minerals += Math.max(1, mps * 0.25); // Click now gives 25% of current MPS, minimum 1
     updateMinerals();
 
     const plusOne = document.createElement('div');
