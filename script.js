@@ -121,7 +121,13 @@ function saveGame() {
     const gameSave = {
         minerals: minerals,
         mps: mps,
-        facilities: facilities
+        facilities: facilities,
+        totalIssinsEverProduced: totalIssinsEverProduced,
+        reincarnationPoints: reincarnationPoints,
+        permanentBonusMultiplier: permanentBonusMultiplier,
+        totalIssinsEverProduced: totalIssinsEverProduced,
+        reincarnationPoints: reincarnationPoints,
+        permanentBonusMultiplier: permanentBonusMultiplier
     };
     localStorage.setItem(SAVE_KEY, JSON.stringify(gameSave));
     console.log('Game Saved!');
@@ -133,6 +139,9 @@ function loadGame() {
         const gameSave = JSON.parse(savedData);
         minerals = gameSave.minerals;
         mps = gameSave.mps !== undefined ? gameSave.mps : 0;
+        totalIssinsEverProduced = gameSave.totalIssinsEverProduced !== undefined ? gameSave.totalIssinsEverProduced : 0;
+        reincarnationPoints = gameSave.reincarnationPoints !== undefined ? gameSave.reincarnationPoints : 0;
+        permanentBonusMultiplier = gameSave.permanentBonusMultiplier !== undefined ? gameSave.permanentBonusMultiplier : 1;
         // Ensure facilities structure is consistent, add new ones if any
         gameSave.facilities.forEach(savedFacility => {
             const index = initialFacilities.findIndex(f => f.name === savedFacility.name);
@@ -160,10 +169,11 @@ function loadGame() {
     updateMinerals();
     updateMPS();
     renderStore();
+    updateIssinTotals(); // Update new reincarnation info after loading
 }
 
 function resetGame() {
-    if (confirm('Are you sure you want to reset your game? All progress will be lost!')) {
+    if (confirm('【注意事項】転生すると現在のIssinと施設が全てリセットされます。累計1,000,000 Issin以上で転生ポイントを獲得できます。本当に転生しますか？')) {
         localStorage.removeItem(SAVE_KEY);
         minerals = 0;
         mps = 0;
@@ -181,7 +191,7 @@ function resetGame() {
 
 mine.addEventListener('click', (e) => {
     const amountGained = Math.max(1, mps * 0.25); // Capture the amount gained
-    minerals += amountGained; // Add captured amount to minerals
+    minerals += amountGained * permanentBonusMultiplier; // Apply bonus multiplier
     updateMinerals();
 
     const plusOne = document.createElement('div');
@@ -203,7 +213,7 @@ mine.addEventListener('click', (e) => {
 });
 
 setInterval(() => {
-    minerals += mps / 10;
+    minerals += passiveGain * permanentBonusMultiplier; // Apply bonus multiplier
     updateMinerals();
     renderStore(); // Re-render store to update disabled state and costs
 }, 100);
@@ -225,6 +235,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (resetButton) {
         resetButton.addEventListener('click', resetGame);
+    }
+
+    const reincarnateButton = document.getElementById('reincarnate-button'); // Get button reference
+    if (reincarnateButton) {
+        reincarnateButton.addEventListener('click', reincarnateGame);
     }
 
     loadGame(); // Load game state on page load
