@@ -210,10 +210,9 @@ function resetGame() {
                 updateIssinTotals(); // Update new reincarnation info
                 saveGame(); // Save game after reincarnation
         
-                        alert(`${pointsGained} 転生ポイントを獲得しました！合計 ${reincarnationPoints} ポイントになりました。`);
-                    }
-                }        }
-
+                                        alert(`${pointsGained} 転生ポイントを獲得しました！合計 ${reincarnationPoints} ポイントになりました。`);
+                                    }
+                                }
 // --- Event Listeners and Initial Setup ---
 // Initial render (will be updated by loadGame)
 // renderStore(); // Moved to loadGame
