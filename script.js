@@ -180,11 +180,12 @@ function resetGame() {
 // renderStore(); // Moved to loadGame
 
 mine.addEventListener('click', (e) => {
-    minerals += Math.max(1, mps * 0.25); // Click now gives 25% of current MPS, minimum 1
+    const amountGained = Math.max(1, mps * 0.25); // Capture the amount gained
+    minerals += amountGained; // Add captured amount to minerals
     updateMinerals();
 
     const plusOne = document.createElement('div');
-    plusOne.innerHTML = '+1 Issin';
+    plusOne.innerHTML = `+${Math.floor(amountGained)} Issin`;
     plusOne.classList.add('plus-one');
     
     // Position the '+1' text at the cursor's location
