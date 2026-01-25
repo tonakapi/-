@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Add event listeners for save and reset buttons
-    const saveButton = document.getElementById('save-game-button');utton');
+    const saveButton = document.getElementById('save-game-button');
     const resetButton = document.getElementById('reset-game-button');
 
     if (saveButton) {
