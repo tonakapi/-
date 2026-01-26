@@ -78,6 +78,12 @@ const initialFacilities = [
         cost: 750000000000,
         mps: 3333333,
         count: 0
+    },
+    {
+        name: '並行世界',
+        cost: 271828182845904,
+        mps: 66260701,
+        count: 0
     }
 ];
 
