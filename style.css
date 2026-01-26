@@ -187,3 +187,7 @@ h2 {
     font-size: 0.65em; /* 所持Issinの数字を約3.5割小さく */
 }
 
+.unit {
+    font-size: 0.85em; /* Issinsの部分を15%縮小 */
+}
+

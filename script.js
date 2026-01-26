@@ -11,8 +11,15 @@ function formatNumber(num) {
         return Math.floor(num).toLocaleString(); // 1,000未満はカンマ区切り
     }
 
-    const suffixes = ["K", "M", "B", "T"]; // Thousand, Million, Billion, Trillion
-    const divisors = [1_000, 1_000_000, 1_000_000_000, 1_000_000_000_000];
+    const suffixes = ["K", "M", "B", "T", "Qa", "Qi"]; // K, Million, Billion, Trillion, Quadrillion, Quintillion
+    const divisors = [
+        1_000,
+        1_000_000,
+        1_000_000_000,
+        1_000_000_000_000, // T (Trillion)
+        1_000_000_000_000_000, // Qa (Quadrillion)
+        1_000_000_000_000_000_000 // Qi (Quintillion)
+    ];
 
     for (let i = suffixes.length - 1; i >= 0; i--) {
         const divisor = divisors[i];
@@ -108,6 +115,12 @@ const initialFacilities = [
         name: '並行世界',
         cost: 271828182845904,
         mps: 66260701,
+        count: 0
+    },
+    { // 新施設「二心」を追加
+        name: '二心',
+        cost: 2222222222222222222,
+        mps: 2222222222,
         count: 0
     }
 ];
