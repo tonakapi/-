@@ -183,3 +183,7 @@ h2 {
     font-weight: bold;
 }
 
+#score {
+    font-size: 0.7em; /* 所持Issinの数字を約3割小さく */
+}
+
