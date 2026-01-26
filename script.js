@@ -6,6 +6,23 @@ let reincarnationPoints = 0;
 let potentialReincarnationPoints = 0;
 let permanentBonusMultiplier = 1; // 1 + (reincarnationPoints * 0.2)
 
+function formatNumber(num) {
+    if (num >= 1_000_000_000_000) {
+        return (num / 1_000_000_000_000).toFixed(2) + 'T';
+    }
+    if (num >= 1_000_000_000) {
+        return (num / 1_000_000_000).toFixed(2) + 'B';
+    }
+    if (num >= 1_000_000) {
+        return (num / 1_000_000).toFixed(2) + 'M';
+    }
+    if (num >= 1_000) {
+        return (num / 1_000).toFixed(2) + 'K';
+    }
+    return Math.floor(num).toLocaleString(); // 1,000未満は通常表示（カンマ区切り）
+}
+
+
 const mineralsDisplay = document.getElementById('score');
 const mpsDisplay = document.getElementById('cps');
 const mine = document.getElementById('mine');
@@ -91,11 +108,11 @@ let facilities = JSON.parse(JSON.stringify(initialFacilities)); // Deep copy for
 
 // --- Game Logic Functions ---
 function updateMinerals() {
-    mineralsDisplay.innerText = Math.floor(minerals);
+    mineralsDisplay.innerText = formatNumber(minerals);
 }
 
 function updateMPS() {
-    mpsDisplay.innerText = (mps * permanentBonusMultiplier).toFixed(1);
+    mpsDisplay.innerText = formatNumber(mps * permanentBonusMultiplier);
 }
 
 function renderStore() {
