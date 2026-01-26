@@ -7,19 +7,27 @@ let potentialReincarnationPoints = 0;
 let permanentBonusMultiplier = 1; // 1 + (reincarnationPoints * 0.2)
 
 function formatNumber(num) {
-    if (num >= 1_000_000_000_000) {
-        return (num / 1_000_000_000_000).toFixed(2) + 'T';
+    if (num < 1000) {
+        return Math.floor(num).toLocaleString(); // 1,000未満はカンマ区切り
     }
-    if (num >= 1_000_000_000) {
-        return (num / 1_000_000_000).toFixed(2) + 'B';
+
+    const suffixes = ["K", "M", "B", "T"]; // Thousand, Million, Billion, Trillion
+    const divisors = [1_000, 1_000_000, 1_000_000_000, 1_000_000_000_000];
+
+    for (let i = suffixes.length - 1; i >= 0; i--) {
+        const divisor = divisors[i];
+        if (num >= divisor) {
+            const result = num / divisor;
+            if (result >= 100) { // 整数部が3桁 (例: 345K)
+                return Math.floor(result) + suffixes[i];
+            } else if (result >= 10) { // 整数部が2桁 (例: 44.2K)
+                return result.toFixed(1) + suffixes[i];
+            } else { // 整数部が1桁 (例: 3.45K)
+                return result.toFixed(2) + suffixes[i];
+            }
+        }
     }
-    if (num >= 1_000_000) {
-        return (num / 1_000_000).toFixed(2) + 'M';
-    }
-    if (num >= 1_000) {
-        return (num / 1_000).toFixed(2) + 'K';
-    }
-    return Math.floor(num).toLocaleString(); // 1,000未満は通常表示（カンマ区切り）
+    return Math.floor(num).toLocaleString(); // fallback, should not be reached if num >= 1000
 }
 
 
