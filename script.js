@@ -192,7 +192,7 @@ function resetGame() {
         
         function reincarnateGame() {
     if (confirm('【注意事項】転生すると現在のIssinと施設が全てリセットされます。現在のIssinが1,000,000以上で転生ポイントを獲得できます。本当に転生しますか？')) {
-        const pointsGained = Math.floor(Math.sqrt(minerals / 1_000_000));
+        const pointsGained = Math.floor(Math.pow(minerals / 1_000_000, 0.45));
 
         if (pointsGained === 0) {
             alert('転生ポイントを獲得するには、現在のIssinが1,000,000以上必要です。');
@@ -259,7 +259,7 @@ mine.addEventListener('click', (e) => {
 setInterval(() => {
     const passiveGain = mps / 10; // Declare passiveGain
     minerals += passiveGain * permanentBonusMultiplier; // Apply bonus multiplier
-    potentialReincarnationPoints = Math.floor(Math.sqrt(minerals / 1_000_000));
+    potentialReincarnationPoints = Math.floor(Math.pow(minerals / 1_000_000, 0.45));
     updateMinerals();
     updateIssinTotals();
     renderStore(); // Re-render store to update disabled state and costs
