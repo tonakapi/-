@@ -224,6 +224,8 @@ function loadGame() {
 
         
         async function submitScoreToLeaderboard(points) {
+    console.log('Attempting to submit score...'); // Debug log
+
     const name = prompt('ランキングに登録する名前を入力してください:', '名無しの一心');
     if (!name) {
         console.log('ランキングへの登録をキャンセルしました。');
