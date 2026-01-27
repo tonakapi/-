@@ -221,18 +221,7 @@ function loadGame() {
     renderStore();
 }
 
-function resetGame() {
-    if (confirm('Are you sure you want to reset your game? All progress will be lost!')) {
-        localStorage.removeItem(SAVE_KEY);
-        minerals = 0;
-        mps = 0;
-        facilities = JSON.parse(JSON.stringify(initialFacilities)); // Reset to initial facilities
-        updateMinerals();
-        updateMPS();
-        renderStore();
-        console.log('Game Reset!');
-    }
-}
+
         
         async function submitScoreToLeaderboard(points) {
     const name = prompt('ランキングに登録する名前を入力してください:', '名無しの一心');
@@ -362,9 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (saveButton) {
         saveButton.addEventListener('click', saveGame);
     }
-    if (resetButton) {
-        resetButton.addEventListener('click', resetGame);
-    }
+
 
     const reincarnateButton = document.getElementById('reincarnate-button'); // Get button reference
     if (reincarnateButton) {
