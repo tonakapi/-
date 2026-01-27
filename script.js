@@ -241,38 +241,29 @@ function resetGame() {
         return;
     }
 
-    const GITHUB_PAT = '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';
-    const REPO_URL = 'https://api.github.com/repos/tonakapi/isshin-clicker-leaderboard/dispatches';
-
-    console.log(`Submitting score: ${name} - ${points}`);
+    const API_URL = 'https://isshin-clicker-leaderboard.onrender.com/scores'; // The Render server
 
     try {
-        const response = await fetch(REPO_URL, {
+        const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
-                'Authorization': `token ${GITHUB_PAT}`,
-                'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                event_type: 'update-leaderboard',
-                client_payload: {
-                    name: name,
-                    points: points,
-                },
-            }),
+            body: JSON.stringify({ name: name, points: points }),
         });
 
-        if (response.status === 204) {
-            alert('ランキングにスコアを送信しました！反映まで数分かかることがあります。');
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Failed to submit score:', errorData.error || response.statusText);
+            alert(`スコアの送信に失敗しました: ${errorData.error || response.statusText}`);
         } else {
-            const responseBody = await response.json();
-            console.error('Error submitting score:', response.status, responseBody);
-            alert('ランキングへのスコア送信に失敗しました。');
+            const successData = await response.json();
+            console.log('Score submitted successfully:', successData);
+            alert('スコアがランキングに登録されました！');
         }
     } catch (error) {
-        console.error('Error submitting score:', error);
-        alert('ランキングへのスコア送信中にエラーが発生しました。');
+        console.error('Network or other error:', error);
+        alert('スコア送信中にネットワークエラーが発生しました。');
     }
 }
 
