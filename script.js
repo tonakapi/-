@@ -234,7 +234,49 @@ function resetGame() {
     }
 }
         
-        function reincarnateGame() {
+        async function submitScoreToLeaderboard(points) {
+    const name = prompt('ランキングに登録する名前を入力してください:', '名無しの一心');
+    if (!name) {
+        console.log('ランキングへの登録をキャンセルしました。');
+        return;
+    }
+
+    const GITHUB_PAT = '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';
+    const REPO_URL = 'https://api.github.com/repos/tonakapi/isshin-clicker-leaderboard/dispatches';
+
+    console.log(`Submitting score: ${name} - ${points}`);
+
+    try {
+        const response = await fetch(REPO_URL, {
+            method: 'POST',
+            headers: {
+                'Authorization': `token ${GITHUB_PAT}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                event_type: 'update-leaderboard',
+                client_payload: {
+                    name: name,
+                    points: points,
+                },
+            }),
+        });
+
+        if (response.status === 204) {
+            alert('ランキングにスコアを送信しました！反映まで数分かかることがあります。');
+        } else {
+            const responseBody = await response.json();
+            console.error('Error submitting score:', response.status, responseBody);
+            alert('ランキングへのスコア送信に失敗しました。');
+        }
+    } catch (error) {
+        console.error('Error submitting score:', error);
+        alert('ランキングへのスコア送信中にエラーが発生しました。');
+    }
+}
+
+function reincarnateGame() {
     if (confirm('【注意事項】転生すると現在のIssinと施設が全てリセットされます。現在のIssinが1,000,000以上で転生ポイントを獲得できます。本当に転生しますか？')) {
         const pointsGained = Math.floor(Math.pow(minerals / 1_000_000, 0.45));
 
@@ -242,9 +284,14 @@ function resetGame() {
             alert('転生ポイントを獲得するには、現在のIssinが1,000,000以上必要です。');
             return;
         }
-
+        
         reincarnationPoints += pointsGained;
         permanentBonusMultiplier = 1 + (reincarnationPoints * 0.2); // 20% per point
+        
+        // Ask to submit score before resetting
+        if (confirm('ランキングにスコアを登録しますか？')) {
+            submitScoreToLeaderboard(reincarnationPoints);
+        }
 
         // Reset game state
         minerals = 0;
