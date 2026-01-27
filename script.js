@@ -146,7 +146,7 @@ function renderStore() {
         }
         facilityElement.innerHTML = `
             <p>${facility.name}</p>
-            <p>Cost: ${Math.floor(facility.cost)} Issins</p>
+            <p>Cost: ${formatNumber(facility.cost)} Issins</p>
             <p>MPS: +${facility.mps}</p>
             <p>Count: ${facility.count}</p>
         `;
